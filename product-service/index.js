@@ -23,7 +23,7 @@ mongoose.connect("mongodb://mongo:27017/product-service",{ useNewUrlParser: true
 
 
 async function connect() {
-  const amqpServer = "amqp://localhost:5672";
+  const amqpServer = "amqp://rabbitmq-service:5672";
   connection = await amqp.connect(amqpServer);
   channel = await connection.createChannel();
   //check if exists or create queue named product

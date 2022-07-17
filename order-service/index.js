@@ -35,7 +35,7 @@ function createOrder(products, userEmail) {
 }
 //connect to rabbitmq
 async function connect() {
-  const amqpServer = "amqp://localhost:5672";
+  const amqpServer = "amqp://rabbitmq-service:5672";
   connection = await amqp.connect(amqpServer);
   channel = await connection.createChannel();
   await channel.assertQueue("ORDER");
