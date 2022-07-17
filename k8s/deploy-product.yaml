@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-deployment
+  template:
+    metadata:
+      labels:
+        app: product-deployment
+    spec:
+      containers:
+        - name: product-deployment
+          image: localhost:32000/product-service:registry
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

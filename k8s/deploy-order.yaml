@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-deployment
+  template:
+    metadata:
+      labels:
+        app: order-deployment
+    spec:
+      containers:
+        - name: order-deployment
+          image: localhost:32000/order-service:registry
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9090
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-deployment
+  template:
+    metadata:
+      labels:
+        app: auth-deployment
+    spec:
+      containers:
+        - name: auth-deployment
+          image: localhost:32000/auth-service:registry
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7070
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

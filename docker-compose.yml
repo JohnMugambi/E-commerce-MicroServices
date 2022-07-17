@@ -1,0 +1,11 @@
+version: "1"
+
+services:
+  auth-service:
+    build: ./auth-service
+
+  order-service:
+    build: ./order-service
+
+  product-service:
+    build: ./product-service
