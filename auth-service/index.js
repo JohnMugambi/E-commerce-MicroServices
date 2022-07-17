@@ -11,7 +11,12 @@ const jwt = require("jsonwebtoken");
 //const MONGO = `mongodb://${HOST}:${MONGO_PORT}/${DB_NAME}`;
 
 //log err
-mongoose.connect("mongodb://mongo:27017/auth-service", { useNewUrlParser: true, seUnifiedTopology: true, })
+//Url to which pod accesses DB running within the cluster
+mongoose
+  .connect("mongodb://mongo:27017/auth-service", {
+    useNewUrlParser: true,
+    seUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Auth DB connected");
   })

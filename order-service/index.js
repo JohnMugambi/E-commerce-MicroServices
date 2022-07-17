@@ -7,6 +7,7 @@ const amqp = require("amqplib");
 
 var channel, connection;
 
+//DB connection
 mongoose.connect(
   "mongodb://mongo:27017/order-service",
   {
@@ -33,6 +34,7 @@ function createOrder(products, userEmail) {
   newOrder.save();
   return newOrder;
 }
+
 //connect to rabbitmq
 async function connect() {
   const amqpServer = "amqp://rabbitmq-service:5672";
@@ -41,14 +43,15 @@ async function connect() {
   await channel.assertQueue("ORDER");
 }
 
+
 connect().then(() => {
   channel.consume("ORDER", (data) => {
     console.log("Consuming ORDER service");
     const { products, userEmail } = JSON.parse(data.content);
     const newOrder = createOrder(products, userEmail);
 
-    //Acknowledges prescence of product
-    channel.ack(data);
+    //Acknowledges prescence of product 
+    //channel.ack(data);
 
     //Insert new product into product queue
     channel.sendToQueue("PRODUCT", Buffer.from(JSON.stringify({ newOrder })));

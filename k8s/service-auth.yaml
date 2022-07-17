@@ -1,14 +1,16 @@
 apiVersion: v1
+# represents the type of Kubernetes objects to be created while using the yaml file
 kind: Service
 
-metadata:
+metadata: #Data that helps uniquely identify the object, including a name string, UID , and optional namespace
   name: auth-service
 
 spec:
   type: NodePort
   ports:
-    - nodePort: 30036
-      port: 7070
-      targetPort: 7070
-  selector:
+    - nodePort: 30036 # communication to outside
+      port: 7070 # used for communication with other pods in the cluster
+      targetPort: 7070 # pod in which container is listening to
+
+  selector: # makes connection to deployment/pod
     app: auth-deployment

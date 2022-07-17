@@ -5,14 +5,19 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels:
+    matchLabels: #
       app: auth-deployment
   template:
+    # applies to a pod : blueprint i.e how all deployments are define
     metadata:
-      labels:
+      labels: # match labels creates connection. Pods get the label through
+        # the template blueprint
+        # helps deployment know which pods belong to it
         app: auth-deployment
     spec:
       containers:
+        # specifies name of the container, which pod it is based on,
+        # which port it should open
         - name: auth-deployment
           image: localhost:32000/auth-service:registry
           imagePullPolicy: Always

@@ -5,8 +5,18 @@ metadata:
     component: rabbitmq
   name: rabbitmq-service
 spec:
+  clusterIP: None
   ports:
+  - port: 15672
+    targetPort: 15672
+    name: discovery
   - port: 5672
+    targetPort: 5672
+    name: amqp
+  #ports:
+  #- port: 5672
+    #targetPort: 15672
+    #nodePort: 15672
   selector:
     app: taskQueue
     component: rabbitmq
@@ -14,7 +24,7 @@ spec:
 
 ---
 apiVersion: v1
-kind: ReplicationController
+kind:  ReplicationController
 metadata:
   labels:
     component: rabbitmq
@@ -28,10 +38,16 @@ spec:
         component: rabbitmq
     spec:
       containers:
-      - image: rabbitmq
+      - image: rabbitmq:3.8.3-management
         name: rabbitmq
         ports:
-        - containerPort: 5672
+        - name: http
+          protocol: TCP
+          containerPort: 15672
+
+        - name: amqp
+          protocol: TCP
+          containerPort: 5672
         resources:
           limits:
             cpu: 100m
